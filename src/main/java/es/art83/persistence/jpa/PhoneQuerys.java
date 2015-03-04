@@ -32,6 +32,7 @@ public class PhoneQuerys {
         for (Phone2 phone : phones) {
             entityManager.persist(phone);
         }
+        entityManager.getTransaction().commit();
     }
 
     private static final String NUMBER_OF_PHONES = "SELECT COUNT(p) FROM Phone2 p";
