@@ -39,5 +39,6 @@ public class HelloJPA {
         em.getTransaction().begin();
         em.remove(u3);
         em.getTransaction().commit();
+
     }
 }
