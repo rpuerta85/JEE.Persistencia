@@ -16,6 +16,7 @@
 		<class>es.art83.persistence.jpa.Phone2</class>
 		<class>es.art83.persistence.jpa.User7</class>
 		<class>es.art83.persistence.jpa.User8</class>
+		<class>es.art83.persistence.jpa.User9</class>
 		<class>es.art83.persistence.jpa.Vehicle2</class>
 		<class>es.art83.persistence.jpa.inheritance.C1</class>
 		<class>es.art83.persistence.jpa.inheritance.C1A</class>
@@ -29,7 +30,7 @@
         <properties>
             <property name="eclipselink.ddl-generation" value="none" /> <!--drop-and-create-tables   none-->
             <property name="eclipselink.logging.level" value="INFO" /> <!-- OFF,WARNING,INFO,FINE,ALL -->
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bbdd" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/miwjee" />
             <property name="javax.persistence.jdbc.user" value="root" />
             <property name="javax.persistence.jdbc.password" value="" />
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

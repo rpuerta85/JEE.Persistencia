@@ -122,6 +122,35 @@ public class PhoneQuerys {
         return (List<PhoneType>) entityManager.createQuery(JPQL1).getResultList();
     }
 
+    private List<Phone2> findCriteria() {
+        CriteriaBuilder criteria = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Phone2> query = criteria.createQuery(Phone2.class); //tipo de objeto que devuelve
+        Root<Phone2> rootPhone = query.from(Phone2.class); // tabla from a la que atacamos
+
+        query.select(rootPhone.get("number"));
+
+        Predicate p1 = criteria.gt(rootPhone.get("id"), 3);
+        Predicate p2 = criteria.isNotNull(rootPhone.get("phoneType"));
+		
+        Predicate predicate = criteria.and(criteria.and(p1, p2));
+        query.where(predicate);
+        query.orderBy(criteria.asc(rootPhone.get("phoneType")));
+        TypedQuery<Phone2> typedQuery = entityManager.createQuery(query);
+        typedQuery.setFirstResult(0);
+        typedQuery.setMaxResults(0); // Se buscan todos
+        return typedQuery.getResultList();
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     private static final String JPQL2 = "SELECT p.id FROM Phone2 p WHERE p.number > 111";
 
     @SuppressWarnings("unchecked")
@@ -129,6 +158,30 @@ public class PhoneQuerys {
         return (List<Integer>) entityManager.createQuery(JPQL2).getResultList();
     }
 
+    private List<Phone2> findCriteria2() {
+        CriteriaBuilder criteria = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Phone2> query = criteria.createQuery(Phone2.class); //tipo de objeto que devuelve
+        Root<Phone2> rootPhone = query.from(Phone2.class); // tabla from a la que atacamos
+
+        query.select(rootPhone.get("id"));
+
+        Predicate p1 = criteria.gt(rootPhone.get("number"), 111);
+		
+        query.where(p1);
+        TypedQuery<Phone2> typedQuery = entityManager.createQuery(query);
+        typedQuery.setFirstResult(0);
+        typedQuery.setMaxResults(0); // Se buscan todos
+        return typedQuery.getResultList();
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     private static final String JPQL3 = "SELECT p FROM Phone2 p WHERE p.phoneType = :type AND p.number < 200 ORDER BY p.number";
 
     @SuppressWarnings("unchecked")
@@ -137,6 +190,28 @@ public class PhoneQuerys {
         query.setParameter("type", PhoneType.WORK);
         return (List<Phone2>) query.getResultList();
     }
+    private List<Phone2> findCriteria3() {
+        CriteriaBuilder criteria = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Phone2> query = criteria.createQuery(Phone2.class); //tipo de objeto que devuelve
+        Root<Phone2> rootPhone = query.from(Phone2.class); // tabla from a la que atacamos
+
+        query.select(rootPhone);
+        Predicate p1 = criteria.equal(rootPhone.get("phoneType").as(PhoneType.class),  PhoneType.WORK);
+        Predicate p2 = criteria.lessThan(rootPhone.get("number"), 200);
+        Predicate predicate = criteria.and(criteria.and(p1, p2));
+		
+        query.where(predicate);
+        query.orderBy(criteria.desc(rootPhone.get("number")));
+
+        TypedQuery<Phone2> typedQuery = entityManager.createQuery(query);
+        typedQuery.setFirstResult(0);
+        typedQuery.setMaxResults(0); // Se buscan todos
+        return typedQuery.getResultList();
+
+    }
+    
+    
+    
 
     public static void main(String[] args) {
         PhoneQuerys criteriaPhone = new PhoneQuerys();
@@ -157,6 +232,15 @@ public class PhoneQuerys {
         System.out.println("findJpql1: " + criteriaPhone.findJpql1());
         System.out.println("findJpql2: " + criteriaPhone.findJpql2());
         System.out.println("findJpql3: " + criteriaPhone.findJpql3());
+        
+        System.out.println("findCriteria: " + criteriaPhone.findCriteria());
+        System.out.println("findCriteria2: " + criteriaPhone.findCriteria2());
+        System.out.println("findCriteria3: " + criteriaPhone.findCriteria3());
+
+        
+
+        
+        
     }
 
 }
